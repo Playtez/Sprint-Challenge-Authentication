@@ -6,7 +6,7 @@ const { jwtSecret } = require('../config/secret.js');
 const Users = require('./auth-users-model');
 const restricted = require('../auth/authenticate-middleware');
 
-router.get('/', restricted, (req, res) => {
+router.get('/users', restricted, (req, res) => {
   Users.find()
     .then(users => {
       res.json(users);

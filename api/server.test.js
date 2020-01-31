@@ -51,11 +51,11 @@ describe('server', () => {
 
     it('auth/login checking for token ', async () => {
       const mockData = { username: 'aaron', password: 'wowowow' };
-      // first we need to add a user to the db
+
       let res = await request(server)
         .post('/api/auth/register')
         .send(mockData);
-      // then we can take mockdata login data
+
       expect(res.status).toBe(201);
       res = await request(server)
         .post('/api/auth/login')
@@ -63,6 +63,40 @@ describe('server', () => {
       const token = res.body.token;
       expect(token.length).toBeGreaterThan(40);
       expect(res.status).toBe(200);
+      const users = await db('users');
+
+      expect(users).toHaveLength(1);
+      res = await request(server)
+        .get('/api/jokes')
+        .send(mockData)
+        .then(info => {
+          console.log(info.status);
+          expect(info.status).toBe(401);
+        });
+    });
+
+    it('should check jokes', async () => {
+      const mockData = { username: 'aaron', password: 'wowowow' };
+      let res = await request(server)
+        .post('/api/auth/register')
+        .send(mockData);
+
+      expect(res.status).toBe(201);
+      res = await request(server)
+        .post('/api/auth/login')
+        .send(mockData);
+      const token = res.body.token;
+      expect(token.length).toBeGreaterThan(40);
+      expect(res.status).toBe(200);
+
+      return request(server)
+        .get('/api/jokes')
+        .send(mockData)
+        .then(info => {
+          expect(res.status).toBe(200);
+        });
     });
   });
+
+  describe('GET / Users test restricted-middleware', () => {});
 });
