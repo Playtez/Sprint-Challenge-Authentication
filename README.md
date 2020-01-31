@@ -40,11 +40,20 @@ Demonstrate your understanding of this week's concepts by answering the followin
 
 - [ ] What is the purpose of using _sessions_?
 
+  - A session creates a file in a temporary directory on the server where registered session variables and their values are stored
+
 - [ ] What does bcrypt do to help us store passwords in a secure manner.
+
+  - bcrypt allows people hash there passwords. aka more secure.
 
 - [ ] What does bcrypt do to slow down attackers?
 
+  - Bcrypt is used primarily to make it harder for an attacker to reverse hashes into passwords after having stolen the hashes. In this scenario the attacker will be running bcrypt on their own computer and the speed of the server doesn't matter.
+
 - [ ] What are the three parts of the JSON Web Token?
+- Payload
+- signature
+- header
 
 ## Minimum Viable Product
 
